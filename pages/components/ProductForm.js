@@ -1,17 +1,19 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
+import Image from 'next/image'
 
 export default function ProductForm({
     _id,
     title: existingTitle,
     description: existingDescription,
     price: existingPrice,
-    images,
+    images: existingImages,
 }) {
     const [title, setTitle] = useState(existingTitle || "");
     const [description, setDescription] = useState(existingDescription || "");
     const [price, setPrice] = useState(existingPrice || "");
+    const [images, setImages] = useState(existingImages || []);
     const [goToProducts, setGoToProducts] = useState(false);
     const router = useRouter();
 
@@ -21,6 +23,7 @@ export default function ProductForm({
             title,
             description,
             price,
+            images,
         };
         if (_id) {
             await axios.put("/api/products", { ...data, _id });
@@ -35,13 +38,12 @@ export default function ProductForm({
     async function uploadPhotos(e) {
         const files = e.target?.files;
         if (files?.length > 0) {
-            console.log("files", files);
             const data = new FormData();
             for (const file of files) {
                 data.append("file", file);
             }
             const res = await axios.post("/api/upload", data);
-            console.log(res.data);
+            setImages((oldImages) => [...oldImages, ...res.data.links]);
         }
     }
     return (
@@ -101,6 +103,21 @@ export default function ProductForm({
                     </div>
                 )}
             </label>
+                {images?.length > 0 && (
+                    <div className="flex flex-wrap gap-4 cursor-default justify-center md:justify-start">
+                        {images.map((image) => (
+                            <div key={image} className="relative">
+                                <Image
+                                    width={200}
+                                    height={200}
+                                    src={image}
+                                    alt={title}
+                                    className=" object-cover rounded-box"
+                                />
+                            </div>
+                        ))}
+                    </div>
+                )}
             <label>
                 <span className="label-text">Precio</span>
                 <input
