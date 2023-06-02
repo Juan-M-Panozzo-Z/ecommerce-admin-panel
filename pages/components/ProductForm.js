@@ -1,7 +1,7 @@
 import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
-import Image from 'next/image'
+import { ReactSortable } from "react-sortablejs";
 
 export default function ProductForm({
     _id,
@@ -15,6 +15,7 @@ export default function ProductForm({
     const [price, setPrice] = useState(existingPrice || "");
     const [images, setImages] = useState(existingImages || []);
     const [goToProducts, setGoToProducts] = useState(false);
+    const [isUploading, setIsUploading] = useState(false);
     const router = useRouter();
 
     async function saveProduct(e) {
@@ -38,13 +39,20 @@ export default function ProductForm({
     async function uploadPhotos(e) {
         const files = e.target?.files;
         if (files?.length > 0) {
+            setIsUploading(true);
             const data = new FormData();
             for (const file of files) {
                 data.append("file", file);
             }
             const res = await axios.post("/api/upload", data);
-            setImages((oldImages) => [...oldImages, ...res.data.links]);
+            setImages((oldImages) => {
+                return [...oldImages, ...res.data.links];
+            });
+            setIsUploading(false);
         }
+    }
+    function updateImagesOrder(images) {
+        setImages(images);
     }
     return (
         <form
@@ -65,7 +73,8 @@ export default function ProductForm({
                 <span className="label-text">Descripción</span>
                 <textarea
                     className="textarea textarea-bordered w-full"
-                    placeholder="Desctiption"
+                    rows={8}
+                    placeholder="Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)}
                 ></textarea>
@@ -75,20 +84,24 @@ export default function ProductForm({
                     <span className="label-text">Foto(s)</span>
                 </div>
                 <label className="btn btn-secondary mx-auto btn-lg">
-                    <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke-width="1.5"
-                        stroke="currentColor"
-                        class="w-6 h-6"
-                    >
-                        <path
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
-                        />
-                    </svg>
+                    {!isUploading ? (
+                        <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke-width="1.5"
+                            stroke="currentColor"
+                            class="w-6 h-6"
+                        >
+                            <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M9 8.25H7.5a2.25 2.25 0 00-2.25 2.25v9a2.25 2.25 0 002.25 2.25h9a2.25 2.25 0 002.25-2.25v-9a2.25 2.25 0 00-2.25-2.25H15m0-3l-3-3m0 0l-3 3m3-3V15"
+                            />
+                        </svg>
+                    ) : (
+                        <span className="loading loading-spinner loading-md text-neutral"></span>
+                    )}
                     <input
                         type="file"
                         onChange={uploadPhotos}
@@ -97,27 +110,25 @@ export default function ProductForm({
                         multiple
                     />
                 </label>
-                {!images?.length && (
-                    <div className="w-full">
-                        <span>No se encuentran fotos en este articulo</span>
-                    </div>
-                )}
             </label>
-                {images?.length > 0 && (
-                    <div className="flex flex-wrap gap-4 cursor-default justify-center md:justify-start">
-                        {images.map((image) => (
-                            <div key={image} className="relative">
-                                <Image
-                                    width={200}
-                                    height={200}
-                                    src={image}
-                                    alt={title}
-                                    className=" object-cover rounded-box"
-                                />
-                            </div>
-                        ))}
-                    </div>
-                )}
+            <ReactSortable
+                list={images}
+                className="mt-4 flex flex-wrap gap-4 justify-center items-center md:justify-start"
+                setList={updateImagesOrder}
+            >
+                {!!images?.length &&
+                    images.map((link) => (
+                        <div key={link} className="relative">
+                            <img
+                                width={200}
+                                height={200}
+                                src={link}
+                                alt={link}
+                                className=" object-cover rounded-box"
+                            />
+                        </div>
+                    ))}
+            </ReactSortable>
             <label>
                 <span className="label-text">Precio</span>
                 <input

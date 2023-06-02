@@ -11,6 +11,10 @@ const ProductSchema = new Schema({
         required: true,
     },
     images: [{ type: String }],
+    // category: {
+    //     type: String,
+    //     required: true,
+    // },
 });
 
 export const Product = models.Product || model("Product", ProductSchema);

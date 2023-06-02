@@ -23,7 +23,6 @@ export default async function handler(req, res) {
     for (const file of files.file) {
         const ext = file.originalFilename.split(".").pop();
         const newFileName = Date.now() + "." + ext;
-        console.log({ ext, file });
         await client.send(
             new PutObjectCommand({
                 Bucket: process.env.S3_BUCKET,

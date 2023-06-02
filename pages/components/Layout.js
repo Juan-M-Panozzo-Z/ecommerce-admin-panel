@@ -5,7 +5,7 @@ export default function Layout({children}) {
     const { data: session } = useSession();
     if (!session) {
         return (
-            <div className="bg-base-100 text-primary">
+            <div className="min-h-screen bg-base-100 text-primary flex justify-center items-center">
                 <button onClick={() => signIn("google")} className="btn">
                     Login with Google
                 </button>
@@ -13,11 +13,12 @@ export default function Layout({children}) {
         );
     }
     return (
-        <div className="bg-base-100 text-primary flex gap-2 items-start">
-            <Nav />
+        <div className="mt-20 container mx-auto">
+            <Nav>
             <button className="flex-grow m-2 text-left">
                 {children}
             </button>
+            </Nav>
         </div>
     );
 }

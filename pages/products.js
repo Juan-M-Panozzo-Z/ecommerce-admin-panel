@@ -16,9 +16,11 @@ export default function products() {
             <Link href={"/products/create"} className="btn btn-primary">
                 Create Product
             </Link>
-            <div className="grid grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-3 gap-4">
                 {products.map(({ _id, title, description, price }) => (
-                    <div class="card bg-base-100 shadow-xl">
+                    <div
+                        key={_id}
+                        class="card bg-base-100 shadow-xl cursor-default">
                         <div class="card-body">
                             <h2 class="card-title">{title}</h2>
                             <p>{description}</p>
