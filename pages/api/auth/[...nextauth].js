@@ -10,5 +10,11 @@ export default NextAuth({
             clientSecret: process.env.GOOGLE_SECRET,
         }),
     ],
-    adapter: MongoDBAdapter(clientPromise)
+    adapter: MongoDBAdapter(clientPromise),
+    callbacks: {
+        jwt ({ token, account, profile }) {
+            console.log("jwt callback");
+            return token
+        },
+    }
 });

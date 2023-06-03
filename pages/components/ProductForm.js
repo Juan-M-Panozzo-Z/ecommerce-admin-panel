@@ -1,4 +1,5 @@
-import { useState } from "react";
+/* eslint-disable @next/next/no-img-element */
+import { useEffect, useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/router";
 import { ReactSortable } from "react-sortablejs";
@@ -6,22 +7,32 @@ import { ReactSortable } from "react-sortablejs";
 export default function ProductForm({
     _id,
     title: existingTitle,
+    category: existingCategory,
     description: existingDescription,
     price: existingPrice,
     images: existingImages,
 }) {
     const [title, setTitle] = useState(existingTitle || "");
+    const [category, setCategory] = useState(existingCategory || "");
     const [description, setDescription] = useState(existingDescription || "");
     const [price, setPrice] = useState(existingPrice || "");
     const [images, setImages] = useState(existingImages || []);
     const [goToProducts, setGoToProducts] = useState(false);
     const [isUploading, setIsUploading] = useState(false);
+    const [categories, setCategories] = useState([]);
     const router = useRouter();
+
+    useEffect(() => {
+        axios.get("/api/categories").then((result) => {
+            setCategories(result.data);
+        });
+    }, []);
 
     async function saveProduct(e) {
         e.preventDefault();
         const data = {
             title,
+            category,
             description,
             price,
             images,
@@ -68,6 +79,20 @@ export default function ProductForm({
                     value={title}
                     onChange={(e) => setTitle(e.target.value)}
                 />
+            </label>
+            <label>
+                <span className="label label-text">Categoría</span>
+                <select
+                    value={category}
+                    onChange={(e) => setCategory(e.target.value)}
+                    className="select select-bordered w-full"
+                >
+                    {categories.map((category) => (
+                        <option key={category._id} value={category._id}>
+                            {category.name}
+                        </option>
+                    ))}
+                </select>
             </label>
             <label>
                 <span className="label-text">Descripción</span>
@@ -141,9 +166,9 @@ export default function ProductForm({
             </label>
             <button
                 type="submit"
-                className="btn btn-primary btn-xs sm:btn-sm md:btn-md"
+                className="btn btn-primary sm:btn-sm md:btn-md"
             >
-                Save
+                Guardar
             </button>
         </form>
     );

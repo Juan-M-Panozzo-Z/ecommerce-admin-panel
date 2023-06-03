@@ -1,3 +1,4 @@
+import { signOut } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
@@ -11,7 +12,7 @@ export default function Nav({ children }) {
         <div class="drawer">
             <input id="my-drawer-3" type="checkbox" class="drawer-toggle" />
             <div class="drawer-content flex flex-col">
-                <div class="w-full navbar bg-base-300 top-0 left-0 fixed md:rounded-box">
+                <div class="w-full navbar bg-base-300 top-0 left-0 fixed">
                     <div class="flex-none lg:hidden">
                         <label
                             for="my-drawer-3"
@@ -171,6 +172,30 @@ export default function Nav({ children }) {
                                     <span>Configuraciones</span>
                                 </Link>
                             </li>
+                            <li>
+                                <button
+                                    onClick={() => {
+                                        signOut();
+                                    }}
+                                    className="btn-error"
+                                >
+                                    <svg
+                                        xmlns="http://www.w3.org/2000/svg"
+                                        fill="none"
+                                        viewBox="0 0 24 24"
+                                        stroke-width="1.5"
+                                        stroke="currentColor"
+                                        class="w-6 h-6"
+                                    >
+                                        <path
+                                            stroke-linecap="round"
+                                            stroke-linejoin="round"
+                                            d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                                        />
+                                    </svg>
+                                    Cerrar sesión
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -230,37 +255,37 @@ export default function Nav({ children }) {
                         </Link>
                     </li>
                     <li>
-                                <Link
-                                    href={"/categories"}
-                                    className={
-                                        pathname.includes("/categories")
-                                            ? activeLink
-                                            : inactiveLink
-                                    }
-                                >
-                                    <svg
-                                        xmlns="http://www.w3.org/2000/svg"
-                                        fill="none"
-                                        viewBox="0 0 24 24"
-                                        stroke-width="1.5"
-                                        stroke="currentColor"
-                                        class="w-6 h-6"
-                                    >
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
-                                        />
-                                        <path
-                                            stroke-linecap="round"
-                                            stroke-linejoin="round"
-                                            d="M6 6h.008v.008H6V6z"
-                                        />
-                                    </svg>
+                        <Link
+                            href={"/categories"}
+                            className={
+                                pathname.includes("/categories")
+                                    ? activeLink
+                                    : inactiveLink
+                            }
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-6 h-6"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M9.568 3H5.25A2.25 2.25 0 003 5.25v4.318c0 .597.237 1.17.659 1.591l9.581 9.581c.699.699 1.78.872 2.607.33a18.095 18.095 0 005.223-5.223c.542-.827.369-1.908-.33-2.607L11.16 3.66A2.25 2.25 0 009.568 3z"
+                                />
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M6 6h.008v.008H6V6z"
+                                />
+                            </svg>
 
-                                    <span>Categorias</span>
-                                </Link>
-                            </li>
+                            <span>Categorias</span>
+                        </Link>
+                    </li>
                     <li>
                         <Link
                             href={"/orders"}
@@ -312,6 +337,30 @@ export default function Nav({ children }) {
                             </svg>
                             <span>Configuraciones</span>
                         </Link>
+                    </li>
+                    <li>
+                        <button
+                            onClick={() => {
+                                signOut();
+                            }}
+                            className="btn-error"
+                        >
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke-width="1.5"
+                                stroke="currentColor"
+                                class="w-6 h-6"
+                            >
+                                <path
+                                    stroke-linecap="round"
+                                    stroke-linejoin="round"
+                                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15M12 9l-3 3m0 0l3 3m-3-3h12.75"
+                                />
+                            </svg>
+                            Cerrar sesión
+                        </button>
                     </li>
                 </ul>
             </div>
