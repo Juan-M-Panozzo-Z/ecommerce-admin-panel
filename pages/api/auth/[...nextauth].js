@@ -4,7 +4,7 @@ import NextAuth from "next-auth";
 import GoogleProvider from "next-auth/providers/google";
 
 // .env
-const adminEmails = ['jmpz.94@gmai.com', 'sistemas@rigelec.com.ar']
+// const adminEmails = ['jmpz.94@gmai.com', 'sistemas@rigelec.com.ar']
 
 export default NextAuth({
     providers: [
@@ -14,16 +14,15 @@ export default NextAuth({
         }),
     ],
     adapter: MongoDBAdapter(clientPromise),
-    callbacks: {
-        session: ({ session, token, profile }) => {
-            if (
-                session?.user?.email &&
-                adminEmails.includes(session.user.email)
-            ) {
-                return session;
-            } else {
-                return false;
-            }
-        },
-    },
+    // callbacks: {
+    //     session: ({ session, token, profile }) => {
+    //         if (
+    //             session.user.email === include(adminEmails)
+    //         ) {
+    //             return session;
+    //         } else {
+    //             return false;
+    //         }
+    //     },
+    // },
 });
