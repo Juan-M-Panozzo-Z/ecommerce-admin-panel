@@ -10,6 +10,7 @@ const ProductSchema = new Schema({
         ref: "Category",
     },
     description: String,
+    rate: Number,
     price: {
         type: Number,
         required: true,
