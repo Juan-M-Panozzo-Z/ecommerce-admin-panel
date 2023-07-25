@@ -11,7 +11,6 @@ export default function OrdersPage() {
         axios
             .get("/api/orders")
             .then((res) => {
-                console.log(res.data)
                 setOrders(res.data);
                 setLoading(false);
             })
