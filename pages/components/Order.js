@@ -14,7 +14,7 @@ export default function Order({ ...props }) {
                     </span>
                     <span>
                         Estado del pago:
-                        {props.status === "paid" ? (
+                        {props.paid ? (
                             <span className="text-green-500"> Pagado</span>
                         ) : (
                             <span className="text-red-500"> Pendiente</span>

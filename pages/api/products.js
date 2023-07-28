@@ -13,14 +13,21 @@ export default async function handler(req, res) {
     }
     if (method === "POST") {
         const { title, category, description, price, images } = req.body;
-        const productDoc = await Product.create({
-            title,
-            category,
-            description,
-            price,
-            images,
-        });
-        res.json(productDoc);
+
+        if (Array.isArray(req.body)) {
+            const createdProducts = await Product.create(req.body);
+            res.status(201).json(createdProducts);
+            return;
+        } else {
+            const productDoc = await Product.create({
+                title,
+                category,
+                description,
+                price,
+                images,
+            });
+            res.json(productDoc);
+        }
     }
     if (method === "PUT") {
         const { title, category, description, price, images, _id } = req.body;
@@ -31,6 +38,10 @@ export default async function handler(req, res) {
         res.json(true);
     }
     if (method === "DELETE") {
+        if (req.query?.all) {
+            await Product.deleteMany();
+            res.json(true);
+        }
         if (req.query?.id) {
             await Product.deleteOne({ _id: req.query.id });
             res.json(true);

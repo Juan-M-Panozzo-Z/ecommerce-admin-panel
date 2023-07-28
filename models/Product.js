@@ -1,23 +1,40 @@
-import mongoose, { Schema, model, models } from "mongoose";
+import { Schema, model, models } from "mongoose";
+
+// const ProductSchema = new Schema({
+//     title: {
+//         type: String,
+//         required: true,
+//     },
+//     category: {
+//         type: String,
+//         required: true,
+//     },
+//     description: String,
+//     rate: {
+//         type: Number,
+//         default: 0,
+//     },
+//     price: {
+//         type: Number,
+//         required: true,
+//     },
+//     images: [{ type: String }],
+// });
 
 const ProductSchema = new Schema({
-    title: {
+    id: Number,
+    ean: Number,
+    descripcion: {
         type: String,
         required: true,
     },
-    category: {
-        type: mongoose.Types.ObjectId,
-        ref: "Category",
+    modelo: String,
+    medida: String,
+    marca: {
+        id: Number,
+        nombre: String,
     },
-    description: String,
-    rate: {
-        type: Number,
-        default: 0,
-    },
-    price: {
-        type: Number,
-        required: true,
-    },
+    perfil: String,
     images: [{ type: String }],
 });
 
