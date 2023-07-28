@@ -23,7 +23,7 @@ import { Schema, model, models } from "mongoose";
 
 const ProductSchema = new Schema({
     id: Number,
-    ean: Number,
+    ean: String,
     descripcion: {
         type: String,
         required: true,
