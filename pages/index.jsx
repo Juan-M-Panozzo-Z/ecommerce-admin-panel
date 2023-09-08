@@ -21,7 +21,10 @@ export default function Home() {
 
                 <div className="grid md:grid-cols-2 gap-4">
                     {Array(4).fill(
-                        <div className="p-4 border rounded-box">
+                        <div
+                            key={Math.random() * 1000}
+                            className="p-4  rounded-box shadow border border-base-300"
+                        >
                             <Doughnut
                                 className="mx-auto"
                                 data={{

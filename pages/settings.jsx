@@ -21,8 +21,8 @@ export default function Settings() {
         e.preventDefault();
         axios
             .post("/api/marquee", { message })
-            .then(({ data }) => {
-                console.log(data);
+            .then(() => {
+                alert("Mensaje guardado");
             })
             .catch((err) => {
                 console.log(err);
@@ -34,18 +34,24 @@ export default function Settings() {
             <div className="container mx-auto">
                 <h1 className="text-2xl">Configurar Mensaje en marquesina</h1>
                 <div className="flex flex-col p-10">
-                        <div className=" flex flex-col justify-center gap-4 md:flex-row md:items-center">
-                            <input
-                                className="input input-bordered w-full"
-                                type="text"
-                                placeholder="Mensaje"
-                                value={message}
-                                onChange={(e) => setMessage(e.target.value)}
-                            />
-                            <button 
+                    <div className=" flex flex-col justify-center gap-4 md:flex-row md:items-center">
+                        <input
+                            className="input input-bordered w-full"
+                            type="text"
+                            placeholder="Mensaje"
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            onKeyDownCapture={(e) => {
+                                if (e.key === "Enter") handleSubmit(e);
+                            }}
+                        />
+                        <button
                             onClick={handleSubmit}
-                            className="btn btn-primary">Guardar</button>
-                        </div>
+                            className="btn btn-primary text-white"
+                        >
+                            Guardar
+                        </button>
+                    </div>
                 </div>
             </div>
         </Layout>

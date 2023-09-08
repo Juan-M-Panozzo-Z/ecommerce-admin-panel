@@ -76,7 +76,7 @@ export default function articles() {
                     </button>
                 </div>
 
-                <>
+                <div>
                     <div className="container mx-auto">
                         <div className="overflow-x-auto">
                             <table className="table w-full">
@@ -138,7 +138,7 @@ export default function articles() {
                             Pagina siguiente
                         </button>
                     </div>
-                </>
+                </div>
             </section>
         </Layout>
     );
