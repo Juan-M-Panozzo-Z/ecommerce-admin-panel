@@ -14,7 +14,7 @@ const FormControl = ({ label, type, value }) => (
     </div>
 );
 
-export const OrderForm = ({ ...order }) => (
+const OrderForm = ({ ...order }) => (
     <section className="space-y-4">
         <div className="grid md:grid-cols-2 gap-4">
             <FormControl
@@ -41,3 +41,5 @@ export const OrderForm = ({ ...order }) => (
         </div>
     </section>
 );
+
+export default OrderForm;

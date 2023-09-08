@@ -2,7 +2,7 @@ import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Layout from "@/pages/components/Layout";
-import { OrderForm } from "@/pages/components/OrderForm";
+import OrderForm from "@/pages/components/OrderForm";
 
 export default function OrderPage() {
     const [order, setOrder] = useState(null);
