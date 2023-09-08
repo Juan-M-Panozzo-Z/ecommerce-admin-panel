@@ -1,28 +1,36 @@
 import clientPromise from "@/lib/mongodb";
 import { MongoDBAdapter } from "@next-auth/mongodb-adapter";
 import NextAuth from "next-auth";
-import GoogleProvider from "next-auth/providers/google";
-
-// .env
-// const adminEmails = ['jmpz.94@gmai.com', 'sistemas@rigelec.com.ar']
+import CredentialsProvider from "next-auth/providers/credentials";
 
 export default NextAuth({
     providers: [
-        GoogleProvider({
-            clientId: process.env.GOOGLE_ID,
-            clientSecret: process.env.GOOGLE_SECRET,
+        CredentialsProvider({
+            name: "credentials",
+            credentials: {
+                email: { label: "Email", type: "email", placeholder: "email" },
+                password: {
+                    label: "Password",
+                    type: "password",
+                    placeholder: "password",
+                },
+            },
+            authorize(credentials) {
+                if (
+                    credentials.email === "admin@rigelec.com.ar" &&
+                    credentials.password === "admin"
+                ) {
+                    return { email: "admin@rigelec.com.ar", name: "Admin" };
+                } else {
+                    return null;
+                }
+            },
         }),
     ],
     adapter: MongoDBAdapter(clientPromise),
-    // callbacks: {
-    //     session: ({ session, token, profile }) => {
-    //         if (
-    //             session.user.email === include(adminEmails)
-    //         ) {
-    //             return session;
-    //         } else {
-    //             return false;
-    //         }
-    //     },
-    // },
+    secret: process.env.SECRET,
+    session: {
+        strategy: "jwt",
+        maxAge: 30 * 24 * 60 * 60,
+    }
 });

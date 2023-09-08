@@ -10,12 +10,19 @@ export default async function handler(req, res) {
     }
 
     if (method === "POST") {
-        const { name, parentCategory } = req.body;
-        const categoryDoc = await Category.create({
-            name,
-            parent: parentCategory ? parentCategory : null,
-        });
-        res.json(categoryDoc);
+        const { body } = req;
+
+        if (Array.isArray(body)) {
+            const categoryDocs = await Category.insertMany(body);
+            res.json(categoryDocs);
+        } else {
+            const { name, parentCategory } = body;
+            const categoryDoc = await Category.create({
+                name,
+                parent: parentCategory ? parentCategory : null,
+            });
+            res.json(categoryDoc);
+        }
     }
 
     if (method === "PUT") {
@@ -32,6 +39,10 @@ export default async function handler(req, res) {
 
     if (method === "DELETE") {
         const { _id } = req.query;
+        if (_id === "all") {
+            const categoryDoc = await Category.deleteMany({});
+            res.json(categoryDoc);
+        }
         await Category.deleteOne({ _id: _id }).then(() => {
             res.json("ok");
         });

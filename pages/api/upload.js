@@ -34,8 +34,8 @@ export default async function handler(req, res) {
         );
         const link = `https://${process.env.S3_BUCKET}.s3.amazonaws.com/${newFileName}`;
         links.push(link);
-    }
-    return res.json({ links });
+    }    return res.json({ links });
+
 }
 
 export const config = {
