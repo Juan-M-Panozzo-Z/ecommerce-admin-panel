@@ -89,7 +89,7 @@ export default function OrdersPage() {
                                         <th>Metodo de pago</th>
                                         <th>Estado</th>
                                         <th>Total</th>
-                                        <th>Acciones</th>
+                                        <th>Ver más</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -129,7 +129,6 @@ export default function OrdersPage() {
                                                             >
                                                                 <button className="btn btn-sm btn-secondary text-white">
                                                                     <HiOutlineArrowTopRightOnSquare />
-                                                                    Ver más
                                                                 </button>
                                                             </Link>{" "}
                                                         </td>

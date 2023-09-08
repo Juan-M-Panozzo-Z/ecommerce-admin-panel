@@ -87,7 +87,7 @@ export default function articles() {
                                         <th>Descripción</th>
                                         <th>Modelo</th>
                                         <th>EAN</th>
-                                        <th>Acciones</th>
+                                        <th>Editar</th>
                                     </tr>
                                 </thead>
                                 <tbody>
