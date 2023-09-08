@@ -23,7 +23,7 @@ export default function Home() {
                     {Array(4).fill(
                         <div
                             key={Math.random() * 1000}
-                            className="p-4  rounded-box shadow border border-base-300"
+                            className="p-4 rounded-box shadow border border-base-300"
                         >
                             <Doughnut
                                 className="mx-auto"
